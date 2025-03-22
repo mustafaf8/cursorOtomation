@@ -10,5 +10,6 @@ namespace SolarAutomation.Models
         public string Category { get; set; } = string.Empty;
         public double PowerOutput { get; set; } // For solar panels (kW)
         public string Manufacturer { get; set; } = string.Empty;
+        public bool? IsGridSupported { get; set; } // Þebeke destekli mi? (null: diðer kategoriler için geçersiz)
     }
-} 
+}

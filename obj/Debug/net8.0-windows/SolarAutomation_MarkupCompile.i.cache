@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 C:\Users\musta\source\repos\test\App.xaml
-91159235762
+32092531975
 
-161560872782
+12-2119121929
 230-833130684
-MainWindow.xaml;Views\CatiView.xaml;Views\CustomerListWindow.xaml;Views\CustomerWindow.xaml;Views\ProductListWindow.xaml;Views\ProductWindow.xaml;Views\QuoteWindow.xaml;Views\TarimsalSulamaView.xaml;Views\UrunlerView.xaml;
+MainWindow.xaml;Views\ProductListWindow.xaml;Views\ProductWindow.xaml;
 
 False
 

@@ -19,30 +19,6 @@ namespace SolarAutomation
             context.Database.EnsureCreated();
         }
 
-        private void NewCustomer_Click(object sender, RoutedEventArgs e)
-        {
-            OpenCustomerWindow();
-        }
-
-        private void NewCustomer_Click(object sender, MouseButtonEventArgs e)
-        {
-            OpenCustomerWindow();
-        }
-
-        private void OpenCustomerWindow()
-        {
-            var customerWindow = new CustomerWindow();
-            customerWindow.Owner = this;
-            customerWindow.ShowDialog();
-        }
-
-        private void CustomerList_Click(object sender, RoutedEventArgs e)
-        {
-            var customerListWindow = new CustomerListWindow();
-            customerListWindow.Owner = this;
-            customerListWindow.ShowDialog();
-        }
-
         private void NewProduct_Click(object sender, RoutedEventArgs e)
         {
             OpenProductWindow();
@@ -75,23 +51,6 @@ namespace SolarAutomation
             var productListWindow = new ProductListWindow();
             productListWindow.Owner = this;
             productListWindow.ShowDialog();
-        }
-
-        private void NewQuote_Click(object sender, RoutedEventArgs e)
-        {
-            OpenQuoteWindow();
-        }
-
-        private void NewQuote_Click(object sender, MouseButtonEventArgs e)
-        {
-            OpenQuoteWindow();
-        }
-
-        private void OpenQuoteWindow()
-        {
-            var quoteWindow = new QuoteWindow();
-            quoteWindow.Owner = this;
-            quoteWindow.ShowDialog();
         }
 
         private void QuoteList_Click(object sender, RoutedEventArgs e)

@@ -2,11 +2,24 @@
 <Window x:Class="SolarAutomation.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters="clr-namespace:SolarAutomation.Converters"
         Title="Solar Otomasyon" Height="600" Width="1000"
-        WindowStartupLocation="CenterScreen"
-       
-        Background="{StaticResource BackgroundColor}">
-    <Grid>
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <!-- Renk Kaynaklarını Tanımlama -->
+        <SolidColorBrush x:Key="BackgroundColor" Color="#F0F0F0"/>
+        <!-- Açık gri arka plan -->
+        <SolidColorBrush x:Key="PrimaryColor" Color="#0078D7"/>
+        <!-- Mavi menü rengi -->
+        <SolidColorBrush x:Key="TextPrimaryColor" Color="#333333"/>
+        <!-- Koyu gri ana metin -->
+        <SolidColorBrush x:Key="TextSecondaryColor" Color="#666666"/>
+        <!-- Daha açık gri ikincil metin -->
+        <SolidColorBrush x:Key="SurfaceColor" Color="White"/>
+        <!-- Beyaz kart arka planı -->
+    </Window.Resources>
+
+    <Grid Background="{StaticResource BackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -15,18 +28,7 @@
         <!-- Üst Menü -->
         <Border Background="{StaticResource PrimaryColor}" Grid.Row="0">
             <Menu Background="Transparent" Foreground="White" Padding="5">
-                <MenuItem Header="Müşteriler" Foreground="White">
-                    <MenuItem Header="Yeni Müşteri" Click="NewCustomer_Click">
-                        <MenuItem.Icon>
-                            <TextBlock Text="+" FontWeight="Bold"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="Müşteri Listesi" Click="CustomerList_Click">
-                        <MenuItem.Icon>
-                            <TextBlock Text="👥" FontSize="14"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </MenuItem>
+                
                 <MenuItem Header="Ürünler" Foreground="White">
                     <MenuItem Header="Ürün Ekle" Click="NewProduct_Click">
                         <MenuItem.Icon>
@@ -39,18 +41,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="Sistemler" Foreground="White">
-                    <MenuItem Header="Yeni Sistem" Click="NewQuote_Click">
-                        <MenuItem.Icon>
-                            <TextBlock Text="+" FontWeight="Bold"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="Sistem Listesi" Click="QuoteList_Click">
-                        <MenuItem.Icon>
-                            <TextBlock Text="📋" FontSize="14"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </MenuItem>
+                
             </Menu>
         </Border>
 
@@ -77,45 +68,7 @@
             <WrapPanel Grid.Row="1" 
                      HorizontalAlignment="Center" 
                      VerticalAlignment="Center">
-                <!-- Yeni Müşteri -->
-                <Border Width="250" Height="150" Margin="10" 
-                        Background="{StaticResource SurfaceColor}"
-                        CornerRadius="8" Cursor="Hand"
-                        MouseDown="NewCustomer_Click">
-                    <Border.Effect>
-                        <DropShadowEffect ShadowDepth="2" BlurRadius="5" Opacity="0.2"/>
-                    </Border.Effect>
-                    <StackPanel VerticalAlignment="Center">
-                        <TextBlock Text="👥" FontSize="36" 
-                                 HorizontalAlignment="Center"/>
-                        <TextBlock Text="Yeni Müşteri" FontSize="18"
-                                 Margin="0,10,0,5"
-                                 HorizontalAlignment="Center"/>
-                        <TextBlock Text="Yeni müşteri kaydı oluşturun"
-                                 Foreground="{StaticResource TextSecondaryColor}"
-                                 HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Border>
-
-                <!-- Yeni Sistem -->
-                <Border Width="250" Height="150" Margin="10" 
-                        Background="{StaticResource SurfaceColor}"
-                        CornerRadius="8" Cursor="Hand"
-                        MouseDown="NewQuote_Click">
-                    <Border.Effect>
-                        <DropShadowEffect ShadowDepth="2" BlurRadius="5" Opacity="0.2"/>
-                    </Border.Effect>
-                    <StackPanel VerticalAlignment="Center">
-                        <TextBlock Text="📋" FontSize="36" 
-                                 HorizontalAlignment="Center"/>
-                        <TextBlock Text="Yeni Sistem" FontSize="18"
-                                 Margin="0,10,0,5"
-                                 HorizontalAlignment="Center"/>
-                        <TextBlock Text="Hızlı teklif oluşturun"
-                                 Foreground="{StaticResource TextSecondaryColor}"
-                                 HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Border>
+                
 
                 <!-- Ürün Listesi -->
                 <Border Width="250" Height="150" Margin="10" 
@@ -139,4 +92,4 @@
             </WrapPanel>
         </Grid>
     </Grid>
-</Window> 
+</Window>

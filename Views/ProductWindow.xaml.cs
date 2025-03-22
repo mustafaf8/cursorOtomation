@@ -1,5 +1,6 @@
 using System;
 using System.Windows;
+using System.Windows.Controls;
 using SolarAutomation.Data;
 using SolarAutomation.Models;
 
@@ -33,6 +34,27 @@ namespace SolarAutomation.Views
             txtPower.Text = _product.PowerOutput.ToString("N2");
             txtManufacturer.Text = _product.Manufacturer;
             cmbCategory.Text = _product.Category;
+
+            if (_product.Category == "Tarımsal Ges" && _product.IsGridSupported.HasValue)
+            {
+                rbGridSupported.IsChecked = _product.IsGridSupported.Value;
+                rbGridUnsupported.IsChecked = !_product.IsGridSupported.Value;
+            }
+        }
+
+        private void CmbCategory_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            var selectedCategory = (cmbCategory.SelectedItem as ComboBoxItem)?.Content.ToString();
+            if (selectedCategory == "Tarımsal Ges")
+            {
+                spGridSupportOptions.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                spGridSupportOptions.Visibility = Visibility.Collapsed;
+                rbGridSupported.IsChecked = false;
+                rbGridUnsupported.IsChecked = false;
+            }
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
@@ -77,6 +99,15 @@ namespace SolarAutomation.Views
                 _product.Manufacturer = txtManufacturer.Text;
                 _product.Category = cmbCategory.Text;
 
+                if (_product.Category == "Tarımsal Ges")
+                {
+                    _product.IsGridSupported = rbGridSupported.IsChecked == true ? true : (rbGridUnsupported.IsChecked == true ? false : null);
+                }
+                else
+                {
+                    _product.IsGridSupported = null;
+                }
+
                 _context.SaveChanges();
                 MessageBox.Show("Ürün başarıyla kaydedildi.", "Bilgi", MessageBoxButton.OK, MessageBoxImage.Information);
                 DialogResult = true;
@@ -94,4 +125,4 @@ namespace SolarAutomation.Views
             Close();
         }
     }
-} 
+}

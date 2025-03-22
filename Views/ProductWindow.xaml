@@ -33,13 +33,11 @@
 
                 <!-- Kategori -->
                 <Label Content="Kategori:" Grid.Row="0" Grid.Column="2" Margin="0,0,10,5"/>
-                <ComboBox x:Name="cmbCategory" Grid.Row="0" Grid.Column="3" Margin="0,0,0,5">
-                    <ComboBoxItem Content="Solar Panel"/>
-                    <ComboBoxItem Content="İnvertör"/>
-                    <ComboBoxItem Content="Akü"/>
-                    <ComboBoxItem Content="Kablo"/>
-                    <ComboBoxItem Content="Konstrüksiyon"/>
-                    <ComboBoxItem Content="Diğer"/>
+                <ComboBox x:Name="cmbCategory" Grid.Row="0" Grid.Column="3" Margin="0,0,0,5"
+                          SelectionChanged="CmbCategory_SelectionChanged">
+                    <ComboBoxItem Content="Tarımsal Ges"/>
+                    <ComboBoxItem Content="Çatı Ges"/>
+                    <ComboBoxItem Content="Ürünler"/>
                 </ComboBox>
 
                 <!-- Fiyat -->
@@ -58,9 +56,18 @@
                 <Label Content="Üretici:" Grid.Row="2" Grid.Column="2" Margin="0,0,10,5"/>
                 <TextBox x:Name="txtManufacturer" Grid.Row="2" Grid.Column="3" Margin="0,0,0,5"/>
 
+                <!-- Şebeke Destek Seçenekleri -->
+                <StackPanel x:Name="spGridSupportOptions" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"
+                            Orientation="Horizontal" Margin="0,0,0,5" Visibility="Collapsed">
+                    <RadioButton x:Name="rbGridSupported" Content="Şebeke Destekli" 
+                                 Margin="0,0,20,0" GroupName="GridSupport"/>
+                    <RadioButton x:Name="rbGridUnsupported" Content="Şebeke Desteksiz" 
+                                 GroupName="GridSupport"/>
+                </StackPanel>
+
                 <!-- Açıklama -->
-                <Label Content="Açıklama:" Grid.Row="3" Grid.Column="0" Margin="0,0,10,5"/>
-                <TextBox x:Name="txtDescription" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"
+                <Label Content="Açıklama:" Grid.Row="4" Grid.Column="0" Margin="0,0,10,5"/>
+                <TextBox x:Name="txtDescription" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3"
                          Height="50" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,0,5"/>
             </Grid>
         </GroupBox>
@@ -71,4 +78,4 @@
             <Button x:Name="btnCancel" Content="İptal" Width="100" Height="30" Click="BtnCancel_Click"/>
         </StackPanel>
     </Grid>
-</Window> 
+</Window>

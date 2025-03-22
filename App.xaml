@@ -2,6 +2,7 @@
 <Application x:Class="SolarAutomation.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:SolarAutomation.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <!-- Renk Paleti -->

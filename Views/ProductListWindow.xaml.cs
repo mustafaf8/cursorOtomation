@@ -15,7 +15,6 @@ namespace SolarAutomation.Views
         {
             InitializeComponent();
             _context = new ApplicationDbContext();
-            cmbCategoryFilter.SelectedIndex = 0; // "Tümü" seçeneğini seç
             LoadProducts();
         }
 
@@ -24,10 +23,23 @@ namespace SolarAutomation.Views
             var query = _context.Products.AsQueryable();
 
             // Kategori filtresi
-            if (cmbCategoryFilter.SelectedIndex > 0) // 0 = "Tümü"
+            var selectedCategory = (cmbCategoryFilter.SelectedItem as ComboBoxItem)?.Content.ToString();
+            if (!string.IsNullOrEmpty(selectedCategory))
             {
-                var selectedCategory = (cmbCategoryFilter.SelectedItem as ComboBoxItem)?.Content.ToString();
                 query = query.Where(p => p.Category == selectedCategory);
+            }
+
+            // Şebeke desteği filtresi (sadece Tarımsal Ges için)
+            if (selectedCategory == "Tarımsal Ges")
+            {
+                if (rbGridSupported.IsChecked == true)
+                {
+                    query = query.Where(p => p.IsGridSupported == true);
+                }
+                else if (rbGridUnsupported.IsChecked == true)
+                {
+                    query = query.Where(p => p.IsGridSupported == false);
+                }
             }
 
             // Arama filtresi
@@ -51,6 +63,22 @@ namespace SolarAutomation.Views
         }
 
         private void CmbCategoryFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedCategory = (cmbCategoryFilter.SelectedItem as ComboBoxItem)?.Content.ToString();
+            if (selectedCategory == "Tarımsal Ges")
+            {
+                spGridSupportOptions.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                spGridSupportOptions.Visibility = Visibility.Collapsed;
+                rbGridSupported.IsChecked = false;
+                rbGridUnsupported.IsChecked = false;
+            }
+            LoadProducts();
+        }
+
+        private void RbGridSupport_Checked(object sender, RoutedEventArgs e)
         {
             LoadProducts();
         }
@@ -118,4 +146,4 @@ namespace SolarAutomation.Views
             }
         }
     }
-} 
+}
