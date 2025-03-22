@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="SolarAutomation.Views.ProductWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Ürün Yönetimi" Height="600" Width="800"
+        WindowStartupLocation="CenterOwner">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Ürün Bilgi Formu -->
+        <GroupBox Header="Ürün Bilgileri" Grid.Row="0" Margin="0,0,0,10">
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Ürün Adı -->
+                <Label Content="Ürün Adı:" Grid.Row="0" Grid.Column="0" Margin="0,0,10,5"/>
+                <TextBox x:Name="txtName" Grid.Row="0" Grid.Column="1" Margin="0,0,10,5"/>
+
+                <!-- Kategori -->
+                <Label Content="Kategori:" Grid.Row="0" Grid.Column="2" Margin="0,0,10,5"/>
+                <ComboBox x:Name="cmbCategory" Grid.Row="0" Grid.Column="3" Margin="0,0,0,5">
+                    <ComboBoxItem Content="Solar Panel"/>
+                    <ComboBoxItem Content="İnvertör"/>
+                    <ComboBoxItem Content="Akü"/>
+                    <ComboBoxItem Content="Kablo"/>
+                    <ComboBoxItem Content="Konstrüksiyon"/>
+                    <ComboBoxItem Content="Diğer"/>
+                </ComboBox>
+
+                <!-- Fiyat -->
+                <Label Content="Fiyat (TL):" Grid.Row="1" Grid.Column="0" Margin="0,0,10,5"/>
+                <TextBox x:Name="txtPrice" Grid.Row="1" Grid.Column="1" Margin="0,0,10,5"/>
+
+                <!-- Stok Miktarı -->
+                <Label Content="Stok:" Grid.Row="1" Grid.Column="2" Margin="0,0,10,5"/>
+                <TextBox x:Name="txtStock" Grid.Row="1" Grid.Column="3" Margin="0,0,0,5"/>
+
+                <!-- Güç Çıkışı -->
+                <Label Content="Güç (kW):" Grid.Row="2" Grid.Column="0" Margin="0,0,10,5"/>
+                <TextBox x:Name="txtPower" Grid.Row="2" Grid.Column="1" Margin="0,0,10,5"/>
+
+                <!-- Üretici -->
+                <Label Content="Üretici:" Grid.Row="2" Grid.Column="2" Margin="0,0,10,5"/>
+                <TextBox x:Name="txtManufacturer" Grid.Row="2" Grid.Column="3" Margin="0,0,0,5"/>
+
+                <!-- Açıklama -->
+                <Label Content="Açıklama:" Grid.Row="3" Grid.Column="0" Margin="0,0,10,5"/>
+                <TextBox x:Name="txtDescription" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"
+                         Height="50" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,0,5"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- Butonlar -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button x:Name="btnSave" Content="Kaydet" Width="100" Height="30" Margin="0,0,10,0" Click="BtnSave_Click"/>
+            <Button x:Name="btnCancel" Content="İptal" Width="100" Height="30" Click="BtnCancel_Click"/>
+        </StackPanel>
+    </Grid>
+</Window> 
