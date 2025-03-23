@@ -12,5 +12,12 @@ namespace SolarAutomation.Data
         {
             optionsBuilder.UseSqlite("Data Source=solarautomation.db");
         }
+
+        // Add this method to ensure your model changes are reflected in the database
+        public void MigrateDatabase()
+        {
+            Database.EnsureDeleted(); // This will delete the existing database
+            Database.EnsureCreated(); // This will recreate it with the current model
+        }
     }
 }

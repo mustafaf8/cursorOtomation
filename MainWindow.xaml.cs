@@ -20,8 +20,8 @@ namespace SolarAutomation
             {
                 using var context = new ApplicationDbContext();
 
-                // Veritabanı ve şema oluşturma
-                context.Database.EnsureCreated();
+                // Recreate the database with current model
+                context.MigrateDatabase();
 
                 // Veritabanının başarıyla oluşturulduğunu kontrol et
                 if (context.Database.CanConnect())
