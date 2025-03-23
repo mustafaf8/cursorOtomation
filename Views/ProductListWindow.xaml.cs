@@ -23,56 +23,37 @@ namespace SolarAutomation.Views
         {
             try
             {
-                // Sadece ihtiyacımız olan sütunları seçerek IsGridSupported sorununu önleyelim
-                var baseQuery = _context.Products
-                    .Select(p => new
-                    {
-                        p.Id,
-                        p.Name,
-                        p.Description,
-                        p.Price,
-                        p.StockQuantity,
-                        p.Category,
-                        p.PowerOutput,
-                        p.Manufacturer
-                        // IsGridSupported'ı dahil etmiyoruz
-                    });
+                // Tüm özellikleri dahil ederek tam Product nesnelerini alalım
+                var query = _context.Products.AsQueryable();
 
                 // Kategori filtresi
                 var selectedCategory = (cmbCategoryFilter.SelectedItem as ComboBoxItem)?.Content.ToString();
                 if (!string.IsNullOrEmpty(selectedCategory))
                 {
-                    baseQuery = baseQuery.Where(p => p.Category == selectedCategory);
+                    query = query.Where(p => p.Category == selectedCategory);
                 }
 
                 // Arama filtresi
                 if (!string.IsNullOrWhiteSpace(txtSearch.Text))
                 {
                     var searchText = txtSearch.Text.ToLower();
-                    baseQuery = baseQuery.Where(p =>
+                    query = query.Where(p =>
                         p.Name.ToLower().Contains(searchText) ||
                         p.Manufacturer.ToLower().Contains(searchText));
                 }
 
-                // Veritabanından sonuçları alalım
-                var results = baseQuery.ToList();
-
-                // Tam Product nesnelerine dönüştürelim
-                var products = results.Select(r => new Product
+                // Şebeke desteği filtresi
+                if (rbGridSupported.IsChecked == true)
                 {
-                    Id = r.Id,
-                    Name = r.Name,
-                    Description = r.Description,
-                    Price = r.Price,
-                    StockQuantity = r.StockQuantity,
-                    Category = r.Category,
-                    PowerOutput = r.PowerOutput,
-                    Manufacturer = r.Manufacturer,
-                    IsGridSupported = null // Varsayılan olarak null
-                }).ToList();
+                    query = query.Where(p => p.IsGridSupported == true);
+                }
+                else if (rbGridUnsupported.IsChecked == true)
+                {
+                    query = query.Where(p => p.IsGridSupported == false);
+                }
 
                 // DataGrid'e veriyi atayalım
-                dgProducts.ItemsSource = products
+                dgProducts.ItemsSource = query
                     .OrderBy(p => p.Category)
                     .ThenBy(p => p.Name)
                     .ToList();
@@ -157,14 +138,19 @@ namespace SolarAutomation.Views
             {
                 try
                 {
-                    _context.Products.Remove(product);
-                    _context.SaveChanges();
-                    LoadProducts();
+                    // Veritabanından ürünü ID'ye göre bulalım ve silelim
+                    var dbProduct = _context.Products.Find(product.Id);
+                    if (dbProduct != null)
+                    {
+                        _context.Products.Remove(dbProduct);
+                        _context.SaveChanges();
+                        LoadProducts();
+                    }
                 }
-                catch
+                catch (Exception ex)
                 {
                     MessageBox.Show(
-                        "Ürün silinirken bir hata oluştu.",
+                        $"Ürün silinirken bir hata oluştu: {ex.Message}",
                         "Hata",
                         MessageBoxButton.OK,
                         MessageBoxImage.Error);
