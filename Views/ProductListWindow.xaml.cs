@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,41 +21,66 @@ namespace SolarAutomation.Views
 
         private void LoadProducts()
         {
-            var query = _context.Products.AsQueryable();
-
-            // Kategori filtresi
-            var selectedCategory = (cmbCategoryFilter.SelectedItem as ComboBoxItem)?.Content.ToString();
-            if (!string.IsNullOrEmpty(selectedCategory))
+            try
             {
-                query = query.Where(p => p.Category == selectedCategory);
-            }
+                // Sadece ihtiyacımız olan sütunları seçerek IsGridSupported sorununu önleyelim
+                var baseQuery = _context.Products
+                    .Select(p => new
+                    {
+                        p.Id,
+                        p.Name,
+                        p.Description,
+                        p.Price,
+                        p.StockQuantity,
+                        p.Category,
+                        p.PowerOutput,
+                        p.Manufacturer
+                        // IsGridSupported'ı dahil etmiyoruz
+                    });
 
-            // Şebeke desteği filtresi (sadece Tarımsal Ges için)
-            if (selectedCategory == "Tarımsal Ges")
-            {
-                if (rbGridSupported.IsChecked == true)
+                // Kategori filtresi
+                var selectedCategory = (cmbCategoryFilter.SelectedItem as ComboBoxItem)?.Content.ToString();
+                if (!string.IsNullOrEmpty(selectedCategory))
                 {
-                    query = query.Where(p => p.IsGridSupported == true);
+                    baseQuery = baseQuery.Where(p => p.Category == selectedCategory);
                 }
-                else if (rbGridUnsupported.IsChecked == true)
+
+                // Arama filtresi
+                if (!string.IsNullOrWhiteSpace(txtSearch.Text))
                 {
-                    query = query.Where(p => p.IsGridSupported == false);
+                    var searchText = txtSearch.Text.ToLower();
+                    baseQuery = baseQuery.Where(p =>
+                        p.Name.ToLower().Contains(searchText) ||
+                        p.Manufacturer.ToLower().Contains(searchText));
                 }
-            }
 
-            // Arama filtresi
-            if (!string.IsNullOrWhiteSpace(txtSearch.Text))
+                // Veritabanından sonuçları alalım
+                var results = baseQuery.ToList();
+
+                // Tam Product nesnelerine dönüştürelim
+                var products = results.Select(r => new Product
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    Description = r.Description,
+                    Price = r.Price,
+                    StockQuantity = r.StockQuantity,
+                    Category = r.Category,
+                    PowerOutput = r.PowerOutput,
+                    Manufacturer = r.Manufacturer,
+                    IsGridSupported = null // Varsayılan olarak null
+                }).ToList();
+
+                // DataGrid'e veriyi atayalım
+                dgProducts.ItemsSource = products
+                    .OrderBy(p => p.Category)
+                    .ThenBy(p => p.Name)
+                    .ToList();
+            }
+            catch (Exception ex)
             {
-                var searchText = txtSearch.Text.ToLower();
-                query = query.Where(p =>
-                    p.Name.ToLower().Contains(searchText) ||
-                    p.Manufacturer.ToLower().Contains(searchText));
+                MessageBox.Show($"Ürünleri yüklerken bir hata oluştu: {ex.Message}", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-            dgProducts.ItemsSource = query
-                .OrderBy(p => p.Category)
-                .ThenBy(p => p.Name)
-                .ToList();
         }
 
         private void TxtSearch_TextChanged(object sender, TextChangedEventArgs e)

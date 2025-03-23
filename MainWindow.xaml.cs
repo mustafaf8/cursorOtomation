@@ -2,6 +2,7 @@ using System.Windows;
 using System.Windows.Input;
 using SolarAutomation.Views;
 using SolarAutomation.Data;
+using System;
 
 namespace SolarAutomation
 {
@@ -15,8 +16,27 @@ namespace SolarAutomation
 
         private void InitializeDatabase()
         {
-            using var context = new ApplicationDbContext();
-            context.Database.EnsureCreated();
+            try
+            {
+                using var context = new ApplicationDbContext();
+
+                // Veritabanı ve şema oluşturma
+                context.Database.EnsureCreated();
+
+                // Veritabanının başarıyla oluşturulduğunu kontrol et
+                if (context.Database.CanConnect())
+                {
+                    Console.WriteLine("Veritabanı başarıyla oluşturuldu.");
+                }
+                else
+                {
+                    MessageBox.Show("Veritabanına bağlanılamadı.", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Veritabanı oluşturulurken hata: {ex.Message}", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void NewProduct_Click(object sender, RoutedEventArgs e)

@@ -8,8 +8,8 @@ namespace SolarAutomation.Models
         public decimal Price { get; set; }
         public int StockQuantity { get; set; }
         public string Category { get; set; } = string.Empty;
-        public double PowerOutput { get; set; } // For solar panels (kW)
+        public double PowerOutput { get; set; }
         public string Manufacturer { get; set; } = string.Empty;
-        public bool? IsGridSupported { get; set; } // Þebeke destekli mi? (null: diðer kategoriler için geçersiz)
+        public bool? IsGridSupported { get; set; }
     }
 }

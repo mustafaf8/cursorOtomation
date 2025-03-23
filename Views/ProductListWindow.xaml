@@ -5,6 +5,9 @@
         xmlns:converters="clr-namespace:SolarAutomation.Converters"
         Title="Ürün Listesi" Height="600" Width="1200"
         WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <converters:BooleanToGridSupportConverter x:Key="BooleanToGridSupportConverter"/>
+    </Window.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

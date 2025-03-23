@@ -11,7 +11,7 @@ using SolarAutomation.Data;
 namespace SolarAutomation.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250322180432_AddIsGridSupported")]
+    [Migration("20250323124342_AddIsGridSupported")]
     partial class AddIsGridSupported
     {
         /// <inheritdoc />

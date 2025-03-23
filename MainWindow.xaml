@@ -6,6 +6,7 @@
         Title="Solar Otomasyon" Height="600" Width="1000"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
+        <converters:BooleanToGridSupportConverter x:Key="BooleanToGridSupportConverter"/>
         <!-- Renk Kaynaklarını Tanımlama -->
         <SolidColorBrush x:Key="BackgroundColor" Color="#F0F0F0"/>
         <!-- Açık gri arka plan -->
